@@ -1,0 +1,17 @@
+#+title: 175.Combine Two Tables
+#+date: <2022-04-12 ÖÜ¶þ>
+
+
+#+begin_src sql
+# Write your MySQL query statement below
+SELECT
+ Person.firstName firstName, 
+ Person.lastName lastName,
+ IFNULL(Address.city, null) city,
+ IFNULL(Address.state,null) state
+ From Person
+ LEFT OUTER JOIN Address
+ ON Person.personID = Address.personID
+ ORDER BY Person.personID;
+#+begin_src
+
