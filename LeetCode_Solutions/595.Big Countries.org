@@ -1,0 +1,14 @@
+#+title: 595.Big Countries
+#+date: <2022-04-13 ÖÜÈý>
+
+
+#+begin_src sql
+# Write your MySQL query statement below
+  SELECT
+    World.name name,
+    World.population population,
+    World.area area
+  From World
+  WHERE World.area >= 3000000 OR World.population >= 25000000
+  ORDER BY name;
+#+end_src

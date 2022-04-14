@@ -1,0 +1,56 @@
+#+title: 700. Search in a Binary Search Tree
+#+date: <2022-04-14 ÖÜËÄ>
+
+#+begin_src ruby
+# Definition for a binary tree node.
+# class TreeNode
+#     attr_accessor :val, :left, :right
+#     def initialize(val = 0, left = nil, right = nil)
+#         @val = val
+#         @left = left
+#         @right = right
+#     end
+# end
+# @param {TreeNode} root
+# @param {Integer} val
+# @return {TreeNode}
+def search_bst(root, val)
+    until root.val == val
+        if root.val > val
+            root = root.left
+        else
+            root = root.right
+        end
+        return nil if root.nil?
+    end
+    return root
+end
+#+end_src
+
+#+begin_src cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        while (root->val != val) {
+            if (root->val > val)
+                root = root->left;
+            else
+                root = root->right;
+            if (!root)
+                return NULL;
+        }
+        return root;
+    }
+};
+#+end_src

@@ -1,0 +1,148 @@
+#+title: 59. Spiral Matrix II
+#+date: <2022-04-13 ÖÜÈý>
+
+#+begin_src cpp
+  //4ms
+  class Solution {
+  public:
+      vector<vector<int>> generateMatrix(int n) {
+	  enum {
+	      right = 1,
+	      down,
+	      left,
+	      up
+	  };
+	  int i, len, row, col, flag;
+	  len = n * n;
+	  vector<vector<int>> ans(n, vector<int>(n, 0));
+	  flag = right;
+	  for (i = row = col = 0, i++; i <= len; i++) {
+	      ans[row][col] = i;
+	      switch(flag){
+		  case right:
+		    if (col < n - 1 && ans[row][col + 1] == 0){
+			  col++;
+			  break;
+		      }
+		      else
+			  flag++;
+		  case down:
+		      if (row < n - 1 && ans[row + 1][col] == 0){
+			  row++;
+			  break;
+		      }
+		      else
+			  flag++;
+		  case left:
+		      if (col > 0 && ans[row][col - 1] == 0){
+			  col--;
+			  break;
+		      }
+		      else
+			  flag++;
+		  case up:
+		      if (row > 0 && ans[row - 1][col] == 0){
+			  row--;
+			  break;
+		      }
+		      else{
+			  flag = 1;
+			  col++;
+		      }
+	      }
+	  }
+	  return ans;
+      }
+  };
+#+end_src
+
+#+begin_src cpp
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        int r1 = 0, r2 = n-1;
+        int c1 = 0, c2 = n-1;
+        int val = 0;
+		// result matrix
+        vector<vector<int>> v(n, vector<int> (n));
+        while(r1 <= r2 && c1 <= c2)
+        {
+            // left to right (row will be fixed)
+            for(int i = c1; i <= c2; ++i)
+                v[r1][i] = ++val;
+				
+				// move down(col will be fixed)
+            for(int i = r1+1; i <= r2; ++i)
+                v[i][c2] = ++val;
+				
+            // move right to left
+            // move  up
+            if(r1 < r2 && c1 < c2)
+            {
+                // move right to left (row will be fixed)
+                for(int i = c2-1; i>c1; --i)
+                    v[r2][i] = ++val;
+					
+					// move up (col will be fixed)
+					for(int i = r2; i>r1; --i) 
+                    v[i][c1] = ++val;
+            }
+            ++r1;
+            --r2;
+            ++c1;
+            --c2;
+        }
+        return v;
+    }
+	// for github repository link go to my profile.
+};
+#+end_src
+
+#+begin_src ruby
+# @param {Integer} n
+# @return {Integer[][]}
+def generate_matrix(n)
+    r1, r2 = 0, n - 1
+    c1, c2 = 0, n - 1
+    val = 1
+    ans = Array.new(n){|e| e = Array.new(n, 0)}
+    
+    while (r1 <= r2 && c1 <= c2)
+        i = c1
+        while i <= c2
+            ans[r1][i] = val
+            val += 1
+            i += 1
+        end
+        
+        i = r1 + 1
+        while i <= r2
+            ans[i][c2] = val
+            val += 1
+            i += 1
+        end
+        
+        if (r1 < r2 && c1 < c2)
+            i = c2 - 1
+            while i > c1
+                ans[r2][i] = val
+                val += 1
+                i -= 1
+            end
+            
+            i = r2
+            while i > r1
+                ans[i][c1] = val
+                i -= 1
+                val += 1
+            end
+        end
+        r1 += 1
+        r2 -= 1
+        c1 += 1
+        c2 -= 1
+    end
+    ans
+end
+#+end_src
+

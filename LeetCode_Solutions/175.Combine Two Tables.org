@@ -3,7 +3,7 @@
 
 
 #+begin_src sql
-# Write your MySQL query statement below
+#Write your MySQL query statement below
 SELECT
  Person.firstName firstName, 
  Person.lastName lastName,
@@ -13,5 +13,5 @@ SELECT
  LEFT OUTER JOIN Address
  ON Person.personID = Address.personID
  ORDER BY Person.personID;
-#+begin_src
+#+end_src
 
