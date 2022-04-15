@@ -1,0 +1,112 @@
+#+title: 669. Trim a Binary Search Tree
+#+date: <2022-04-15 ÖÜÎå>
+
+#+begin_src cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        int v;
+        while (root){
+            v = root->val;
+            if (v < low){
+                root = root->right;
+            }
+            else if (v > high)
+                root = root->left;
+            else
+                break;
+        }
+        if (!root)
+            return root;
+        TreeNode *proc, *pnow;
+        queue<TreeNode*> tmp;
+        tmp.push(root);
+        while (!tmp.empty()){
+            pnow = tmp.front();
+            if (pnow->left){
+                if (pnow->left->val >= low)
+                    tmp.push(pnow->left);
+                else{
+                    proc = pnow->left->right;
+                    while (proc && proc->val < low)
+                        proc = proc->right;
+                    pnow->left = proc;
+                    if (proc)
+                        tmp.push(proc);
+                }
+            }
+            if (pnow->right){
+                if (pnow->right->val <= high)
+                    tmp.push(pnow->right);
+                else{
+                    proc = pnow->right->left;
+                    while (proc && proc->val > high)
+                        proc = proc->left;
+                    pnow->right = proc;
+                    if (proc)
+                        tmp.push(proc);
+                }
+            }
+            tmp.pop();
+        }
+        return root;
+    }
+};
+#+end_src
+
+#+begin_src ruby
+def trim_bst(root, low, high)
+    tmp = []
+    until root.nil?
+        if root.val < low
+            root = root.right
+        elsif root.val > high
+            root = root.left
+        else
+            tmp.push(root)
+            break
+        end
+    end
+    return nil if root.nil?
+    pro = TreeNode.new
+    pnow = TreeNode.new
+    until tmp.empty?
+        pnow = tmp.shift
+        if (pnow.left)
+            if pnow.left.val >= low
+                tmp.push(pnow.left)
+            else
+                pro = pnow.left.right
+                pro = pro.right while (pro && pro.val < low)
+                pnow.left = pro
+                tmp.push(pro) if pro
+            end
+        end
+        if (pnow.right)
+            if pnow.right.val <= high
+                tmp.push(pnow.right)
+            else
+                pro = pnow.right.left
+                pro = pro.left while (pro && pro.val > high)
+                pnow.right = pro
+                tmp.push(pro) if pro
+            end
+            
+        end
+    end
+    root
+end
+#+end_src
+
