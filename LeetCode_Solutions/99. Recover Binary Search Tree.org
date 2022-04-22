@@ -1,0 +1,71 @@
+#+title: 99. Recover Binary Search Tree
+#+date: <2022-04-19 ÖÜ¶þ>
+
+#+begin_src cpp
+class Solution {
+public:
+    void recoverTree(TreeNode* root) {
+        stack<TreeNode*> tmp;
+        TreeNode*pr, *last, *n1, *n2;
+        pr = root;
+        last = n1 = NULL;
+        while (pr || !tmp.empty()){
+            while (pr){
+                tmp.push(pr);
+                pr = pr->left;
+            }
+            pr = tmp.top();
+            tmp.pop();
+            if (last && last->val > pr->val){
+                if (n1)
+                    break;
+                n1 = last;
+                n2 = pr;
+            }
+            last = pr;
+            pr = pr->right;
+        }
+        int ttt;
+        ttt = n1->val;
+        if (pr){
+            n1->val = pr->val;
+            pr->val = ttt;
+        }else{
+            n1->val = n2->val;
+            n2->val = ttt;
+        }
+    }
+};
+#+end_src
+
+#+begin_src ruby
+def recover_tree(root)
+    pr = root
+    tmp = []
+    last = nil
+    n1 = nil
+    n2 = nil
+    while (pr || tmp[0])
+        while pr
+            tmp.push(pr)
+            pr = pr.left
+        end
+        pr = tmp.pop
+        if (last && last.val > pr.val)
+            break if n1
+            n1 = last
+            n2 = pr
+        end
+        last = pr
+        pr = pr.right
+    end
+    ttt = n1.val
+    if pr
+        n1.val = pr.val
+        pr.val = ttt
+    else
+        n1.val = n2.val
+        n2.val = ttt
+    end
+end
+#+end_src

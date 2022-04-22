@@ -1,0 +1,59 @@
+#+title: 705. Design HashSet
+#+date: <2022-04-21 ÖÜËÄ>
+
+#+begin_src cpp
+class MyHashSet {
+public:
+    struct HHH {
+        uint8_t ss[1000001];
+    };
+    HHH ans = {0};
+    MyHashSet() {
+    }
+    
+    void add(int key) {
+        ans.ss[key] = 1;
+    }
+    
+    void remove(int key) {
+        ans.ss[key] = 0;
+    }
+    
+    bool contains(int key) {
+        return ans.ss[key];
+    }
+};
+#+end_src
+
+
+#+begin_src ruby
+class MyHashSet
+    def initialize()
+        @hhh = Hash.new
+    end
+
+=begin
+    :type key: Integer
+    :rtype: Void
+=end
+    def add(key)
+        @hhh[key] = 1
+    end
+
+=begin
+    :type key: Integer
+    :rtype: Void
+=end
+    def remove(key)
+        @hhh.delete(key)
+    end
+
+=begin
+    :type key: Integer
+    :rtype: Boolean
+=end
+    def contains(key)
+        @hhh.include?(key)
+    end
+end
+#+end_src

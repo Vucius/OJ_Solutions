@@ -1,0 +1,65 @@
+#+title: 706. Design HashMap
+#+date: <2022-04-23 ÖÜÁù>
+
+#+begin_src cpp
+class MyHashMap {
+public:
+    unsigned int ans[1000001];
+    MyHashMap() {
+        memset(ans, -1, sizeof(ans));
+    }
+    
+    void put(int key, int value) {
+        ans[key] = value;
+    }
+    
+    int get(int key) {
+        return ans[key];
+    }
+    
+    void remove(int key) {
+        ans[key] = -1;
+    }
+};
+#+end_src
+
+#+begin_src ruby
+class MyHashMap
+    def initialize()
+        @ans = {}
+    end
+
+=begin
+    :type key: Integer
+    :type value: Integer
+    :rtype: Void
+=end
+    def put(key, value)
+        @ans[key] = value
+    end
+
+
+=begin
+    :type key: Integer
+    :rtype: Integer
+=end
+    def get(key)
+        return @ans[key] if (@ans[key])
+        -1
+    end
+
+
+=begin
+    :type key: Integer
+    :rtype: Void
+=end
+    def remove(key)
+        @ans.delete(key)
+    end
+end
+# Your MyHashMap object will be instantiated and called as such:
+# obj = MyHashMap.new()
+# obj.put(key, value)
+# param_2 = obj.get(key)
+# obj.remove(key)
+#+end_src

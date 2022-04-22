@@ -1,0 +1,47 @@
+#+title: 230. Kth Smallest Element in a BST
+#+date: <2022-04-19 ÖÜ¶þ>
+
+#+begin_src cpp
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        int count = 0;
+        stack<TreeNode*> tmp;
+        TreeNode* pr;
+        pr = root;
+        while (pr || !tmp.empty()){
+            while (pr){
+                tmp.push(pr);
+                pr = pr->left;
+            }
+            pr = tmp.top();
+            tmp.pop();
+            count++;
+            if (count == k){
+                return pr->val;
+            }
+            pr = pr->right;
+        }
+        return pr->val;
+    }
+};
+#+end_src
+
+#+begin_src ruby
+def kth_smallest(root, k)
+    tmp = []
+    count = 0
+    pr = root
+    while pr || !tmp.empty?
+        while pr
+            tmp.push(pr)
+            pr = pr.left
+        end
+        pr = tmp.pop
+        count += 1
+        return pr.val if count == k
+        pr = pr.right
+    end
+    return pr.val
+end
+#+end_src

@@ -1,0 +1,72 @@
+#+title: 538. Convert BST to Greater Tree
+#+date: <2022-04-16 ÖÜÁù>
+
+
+#+begin_src cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//90ms 5.52
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        int sum = 0;
+        stack<TreeNode*> todo;
+        TreeNode*pt = root;
+        while (pt || !todo.empty()) {
+            while (pt) {
+                todo.push(pt);
+                pt = pt -> right;
+            }
+            pt = todo.top();
+            todo.pop();
+            if (pt){
+                pt->val += sum;
+                sum = pt->val;
+            }
+            pt = pt -> left;
+        }
+        return root;
+    }
+};
+#+end_src
+
+#+begin_src ruby
+# Definition for a binary tree node.
+# class TreeNode
+#     attr_accessor :val, :left, :right
+#     def initialize(val = 0, left = nil, right = nil)
+#         @val = val
+#         @left = left
+#         @right = right
+#     end
+# end
+# @param {TreeNode} root
+# @return {TreeNode}
+def convert_bst(root)
+    sum = 0
+    todo = []
+    pt = root
+    while (pt || !todo.empty?)
+        while pt
+            todo.push(pt)
+            pt = pt.right
+        end
+        pt = todo.pop
+        if pt
+            pt.val += sum
+            sum = pt.val
+        end
+        pt = pt.left
+    end
+    root
+end
+#+end_src
