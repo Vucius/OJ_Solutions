@@ -1,0 +1,49 @@
+#+title: 535. Encode and Decode TinyURL
+#+date: <2022-04-24 ÖÜÈÕ>
+
+#+begin_src cpp
+class Solution {
+public:
+    map<string, string> uurrll;
+    int count = 0;
+    string tmp = "http://tinyurl.com/";
+    // Encodes a URL to a shortened URL.
+    string encode(string longUrl) {
+        string kk = tmp + to_string(count++);
+        uurrll[kk] = longUrl;
+        return kk;
+    }
+
+    // Decodes a shortened URL to its original URL.
+    string decode(string shortUrl) {
+        return uurrll[shortUrl];
+    }
+};
+#+end_src
+
+#+begin_src ruby
+# Encodes a URL to a shortened URL.
+#
+# @param {string} longUrl
+# @return {string}
+@url = {}
+@count = 6
+def encode(longUrl)
+    k = @count.to_s
+    @count += 1
+    @url[k] = longUrl
+    k
+end
+
+# Decodes a shortened URL to its original URL.
+#
+# @param {string} shortUrl
+# @return {string}
+def decode(shortUrl)
+    @url[shortUrl]
+end
+
+
+# Your functions will be called as such:
+# decode(encode(url))
+#+end_src
