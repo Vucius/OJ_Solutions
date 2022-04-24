@@ -1,0 +1,94 @@
+#+title: 1396. Design Underground System
+#+date: <2022-04-24 ÖÜÈÕ>
+
+#+begin_src cpp
+class UndergroundSystem {
+public:
+    struct temp {
+        string start = "";
+        int start_time = 0;
+    };
+    struct info {
+        int sum = 0;
+        int count = 0;
+    };
+    map<int, struct temp> arr_checkin;
+    map<pair<string, string>, struct info> ans;
+    UndergroundSystem() {
+        
+    }
+    
+    void checkIn(int id, string stationName, int t) {
+        arr_checkin[id] = {stationName, t};
+    }
+    void checkOut(int id, string stationName, int t) {
+        string sss = arr_checkin[id].start;
+        t = t - arr_checkin[id].start_time;
+        if (ans[{sss, stationName}].sum == 0){
+            ans[{sss, stationName}] = {t, 1};
+        }else {
+            ans[{sss, stationName}].sum += t;
+            ans[{sss, stationName}].count++;
+        }
+        
+    }
+    double getAverageTime(string startStation, string endStation) {
+        return double(ans[{startStation, endStation}].sum) / double(ans[{startStation, endStation}].count);
+    }
+};
+#+end_src
+
+#+begin_src ruby
+class UndergroundSystem
+    def initialize()
+        @ttt = {}
+        @ccc = {}
+    end
+
+=begin
+    :type id: Integer
+    :type station_name: String
+    :type t: Integer
+    :rtype: Void
+=end
+    def check_in(id, station_name, t)
+        @ttt[id] = [station_name, t]
+    end
+
+
+=begin
+    :type id: Integer
+    :type station_name: String
+    :type t: Integer
+    :rtype: Void
+=end
+    def check_out(id, station_name, t)
+        tmp = [@ttt[id][0], station_name]
+        if @ccc.include?(tmp)
+            sum = @ccc[tmp][0] * @ccc[tmp][1] + t - @ttt[id][1]
+            @ccc[tmp][0] += 1
+            @ccc[tmp][1] = sum / @ccc[tmp][0]
+        else
+            @ccc[tmp] = [1, t - @ttt[id][1]*1.0]
+        end
+    end
+
+
+=begin
+    :type start_station: String
+    :type end_station: String
+    :rtype: Float
+=end
+    def get_average_time(start_station, end_station)
+        @ccc[[start_station, end_station]][1]
+    end
+
+
+end
+
+# Your UndergroundSystem object will be instantiated and called as such:
+# obj = UndergroundSystem.new()
+# obj.check_in(id, station_name, t)
+# obj.check_out(id, station_name, t)
+# param_3 = obj.get_average_time(start_station, end_station)
+#+end_src
