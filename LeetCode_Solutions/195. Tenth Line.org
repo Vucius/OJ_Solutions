@@ -1,0 +1,10 @@
+#+title: 195. Tenth Line
+#+date: <2022-04-25 ÖÜÒ»>
+
+#+begin_src bash
+# Read from the file file.txt and output the tenth line to stdout.
+# cat file.txt | tail -n +10 | head -n 1
+# sed -n '10, 10p' file.txt
+awk 'NR==10' file.txt
+# tail -n +10 file.txt | head -1
+#+end_src
