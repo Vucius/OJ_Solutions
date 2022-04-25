@@ -1,0 +1,104 @@
+#+title: 284. Peeking Iterator
+#+date: <2022-04-25 ÖÜÒ»>
+
+#+begin_src cpp
+/*
+ * Below is the interface for Iterator, which is already defined for you.
+ * **DO NOT** modify the interface for Iterator.
+ *
+ *  class Iterator {
+ *		struct Data;
+ * 		Data* data;
+ *  public:
+ *		Iterator(const vector<int>& nums);
+ * 		Iterator(const Iterator& iter);
+ *
+ * 		// Returns the next element in the iteration.
+ *		int next();
+ *
+ *		// Returns true if the iteration has more elements.
+ *		bool hasNext() const;
+ *	};
+ */
+
+class PeekingIterator : public Iterator {
+public:
+    int value = 0;
+	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
+	    // Initialize any member here.
+	    // **DO NOT** save a copy of nums and manipulate it directly.
+	    // You should only use the Iterator interface methods.
+	    value = Iterator::next();
+	}
+	
+    // Returns the next element in the iteration without advancing the iterator.
+	int peek() {
+        return value;
+	}
+	
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	int next() {
+        int tmp = value;
+	    if (Iterator::hasNext())
+            value = Iterator::next();
+        else
+            value = 0;
+        return tmp;
+	}
+	
+	bool hasNext() const {
+	    return value;
+	}
+};
+#+end_src
+
+#+begin_src ruby
+# Below is the interface for Iterator, which is already defined for you.
+#
+# class Iterator
+# 	def initialize(v)
+#   
+#   end
+#
+#   def hasNext()
+#		Returns true if the iteration has more elements.
+#   end
+#
+#   def next()
+#   	Returns the next element in the iteration.
+#   end
+# end
+
+class PeekingIterator
+    # @param {Iterator} iter
+    def initialize(iter)
+        @it = iter
+    	@next = @it.next()
+    end
+    
+    # Returns true if the iteration has more elements.
+    # @return {boolean}
+    def hasNext()
+    	return !@next.nil?
+    end
+    
+    # Returns the next element in the iteration.
+    # @return {integer}
+    def next()
+    	tmp = @next
+        if (@it.hasNext())
+            @next = @it.next()
+        else
+            @next = nil
+        end
+        tmp
+    end
+    
+    # Returns the next element in the iteration without advancing the iterator.
+    # @return {integer}
+    def peek()
+    	return @next
+    end
+end
+#+end_src
