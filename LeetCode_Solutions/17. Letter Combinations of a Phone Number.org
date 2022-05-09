@@ -1,0 +1,136 @@
+#+title: 17. Letter Combinations of a Phone Number
+#+date: <2022-05-09 ÖÜÒ»>
+
+#+begin_src cpp
+vector<string> letterCombinations(string digits) {
+        vector<string> res, tmp;
+        if ("" == digits)
+            return res;
+        res.push_back("");
+        int i, ll;
+        for (auto d : digits) {
+            tmp.clear();
+            tmp = res;
+            res.insert(res.begin(), tmp.begin(), tmp.end());
+            res.insert(res.begin(), tmp.begin(), tmp.end());
+            switch(d - '0'){
+                case 2:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "a";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "b";
+                        else
+                            res[i] += "c";
+                    }
+                    break;
+                case 3:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "d";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "e";
+                        else
+                            res[i] += "f";
+                    }
+                    break;
+                case 4:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "g";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "h";
+                        else
+                            res[i] += "i";
+                    }
+                    break;
+                case 5:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "j";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "k";
+                        else
+                            res[i] += "l";
+                    }
+                    break;
+                case 6:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "m";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "n";
+                        else
+                            res[i] += "o";
+                    }
+                    break;
+                case 7:
+                    res.insert(res.begin(), tmp.begin(), tmp.end());
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 4)
+                            res[i] += "p";
+                        else if (i < ll * 2 / 4)
+                            res[i] += "q";
+                        else if (i < ll * 3 / 4)
+                            res[i] += "r";
+                        else
+                            res[i] += "s";
+                    }
+                    break;
+                case 8:
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 3)
+                            res[i] += "t";
+                        else if (i < ll * 2 / 3)
+                            res[i] += "u";
+                        else
+                            res[i] += "v";
+                    }
+                    break;
+                case 9:
+                    res.insert(res.begin(), tmp.begin(), tmp.end());
+                    for (i = 0, ll = res.size(); i < ll; i++) {
+                        if (i < ll / 4)
+                            res[i] += "w";
+                        else if (i < ll * 2 / 4)
+                            res[i] += "x";
+                        else if (i < ll * 3 / 4)
+                            res[i] += "y";
+                        else
+                            res[i] += "z";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return res;
+    }
+#+end_src
+
+#+begin_src ruby
+# @param {String} digits
+# @return {String[]}
+def letter_combinations(digits)
+    letters = {
+        '2' => ['a','b','c'],
+        '3' => ['d','e','f'],
+        '4' => ['g','h','i'],
+        '5' => ['j','k','l'],
+        '6' => ['m','n','o'],
+        '7' => ['p','q','r','s'],
+        '8' => ['t','u','v'],
+        '9' => ['w','x','y','z']
+    }
+    
+    digits.each_char.inject([]) do |obj, char|
+        if obj.empty?
+            obj = letters[char]
+        else
+            ary = letters[char]
+            
+            obj.flat_map {|e| ary.map {|m| e + m}}
+        end
+    end
+end
+#+end_src

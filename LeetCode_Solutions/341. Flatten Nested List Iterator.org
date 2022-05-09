@@ -1,0 +1,116 @@
+#+title: 341. Flatten Nested List Iterator
+#+date: <2022-05-08 ÖÜÈÕ>
+
+#+begin_src cpp
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * class NestedInteger {
+ *   public:
+ *     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     bool isInteger() const;
+ *
+ *     // Return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // The result is undefined if this NestedInteger holds a nested list
+ *     int getInteger() const;
+ *
+ *     // Return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // The result is undefined if this NestedInteger holds a single integer
+ *     const vector<NestedInteger> &getList() const;
+ * };
+ */
+
+class NestedIterator {
+public:
+    queue<int> store;
+    void pput(vector<NestedInteger> aim){
+        for (auto a : aim){
+           if (!a.isInteger()){
+               pput(a.getList());
+           }
+            else
+                store.push(a.getInteger());
+        }
+    }
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        pput(nestedList);
+        
+    }
+    
+    int next() {
+        int ans = store.front();
+        store.pop();
+        return ans;
+    }
+    
+    bool hasNext() {
+        return !store.empty();
+    }
+};
+
+/**
+ * Your NestedIterator object will be instantiated and called as such:
+ * NestedIterator i(nestedList);
+ * while (i.hasNext()) cout << i.next();
+ */
+#+end_src
+
+
+#+begin_src ruby
+# This is the interface that allows for creating nested lists.
+# You should not implement it, or speculate about its implementation
+#
+#class NestedInteger
+#    def is_integer()
+#        """
+#        Return true if this NestedInteger holds a single integer, rather than a nested list.
+#        @return {Boolean}
+#        """
+#
+#    def get_integer()
+#        """
+#        Return the single integer that this NestedInteger holds, if it holds a single integer
+#        Return nil if this NestedInteger holds a nested list
+#        @return {Integer}
+#        """
+#
+#    def get_list()
+#        """
+#        Return the nested list that this NestedInteger holds, if it holds a nested list
+#        Return nil if this NestedInteger holds a single integer
+#        @return {NestedInteger[]}
+#        """
+
+class NestedIterator
+    # @param {NestedInteger[]} nested_list
+    def initialize(nested_list)
+        @aaa = []
+        ppp(nested_list)
+    end
+    def ppp(list)
+        list.each do |lll|
+            if lll.is_integer
+                @aaa.push lll.get_integer
+            else
+                ppp(lll.get_list)
+            end
+        end
+    end
+    
+    # @return {Boolean}
+    def has_next
+        !@aaa.empty?
+    end
+
+    # @return {Integer}
+    def next
+        @aaa.shift
+    end
+end
+
+# Your NestedIterator will be called like this:
+# i, v = NestedIterator.new(nested_list), []
+# while i.has_next()
+#    v << i.next
+# end
+#+end_src

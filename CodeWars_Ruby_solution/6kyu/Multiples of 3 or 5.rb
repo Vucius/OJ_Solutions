@@ -11,4 +11,4 @@ def solution(number)
      c = number - (number % 15)
      c = (c / 15) * (c + 15) / 2
      return a+b-c
-   end
+end
