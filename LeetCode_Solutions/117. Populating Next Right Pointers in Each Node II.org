@@ -1,0 +1,91 @@
+#+title: 117. Populating Next Right Pointers in Each Node II
+#+date: <2022-05-13 ÖÜÎå>
+
+#+begin_src cpp
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
+};
+*/
+
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if (!root)
+            return NULL;
+        vector<Node*> tmp, tmpb;
+        int i, len, j;
+        root->next = NULL;
+        if (root->left)
+            tmp.push_back(root->left);
+        if (root->right)
+            tmp.push_back(root->right);
+        
+        while (!tmp.empty()){
+            tmpb.clear();
+            for (i = 1, len = tmp.size(); i < len; i++){
+                j = i - 1;
+                tmp[j]->next = tmp[i];
+                if (tmp[j]->left)
+                    tmpb.push_back(tmp[j]->left);
+                if (tmp[j]->right)
+                    tmpb.push_back(tmp[j]->right);
+            }
+            j = len - 1;
+            tmp[j]->next = NULL;
+            if (tmp[j]->left)
+                tmpb.push_back(tmp[j]->left);
+            if (tmp[j]->right)
+                tmpb.push_back(tmp[j]->right);
+            tmp.assign(tmpb.begin(), tmpb.end());
+        }
+        
+        return root;
+    }
+};
+#+end_src
+
+#+begin_src ruby
+# Definition for a Node.
+# class Node
+#     attr_accessor :val, :left, :right, :next
+#     def initialize(val)
+#         @val = val
+#         @left, @right, @next = nil, nil, nil
+#     end
+# end
+
+# @param {Node} root
+# @return {Node}
+def connect(root)
+    return nil if root.nil?
+    root.next = nil
+    tmp = []
+    tmp << root.left if root.left
+    tmp << root.right if root.right
+    until tmp.empty?
+        tmpb = []
+        tmp[1..-1].each_with_index do |e, i|
+            tmp[i].next = e
+            tmpb << tmp[i].left if tmp[i].left
+            tmpb << tmp[i].right if tmp[i].right
+        end
+        tmp[-1].next = nil
+        tmpb << tmp[-1].left if tmp[-1].left
+        tmpb << tmp[-1].right if tmp[-1].right
+        tmp = tmpb
+    end
+    root
+end
+#+end_src
