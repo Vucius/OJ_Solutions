@@ -1,0 +1,41 @@
+#+title: 219. Contains Duplicate II
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} nums
+# @param {Integer} k
+# @return {Boolean}
+def contains_nearby_duplicate(nums, k)
+    tmp = Hash.new
+    nums.each_with_index do |n, i|
+        return true if tmp[n] && i - tmp[n] <= k
+        tmp[n] = i
+    end
+    return false
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+        vector<pair<int, int>> tmp;
+        int i, len;
+        for(i = 0, len = nums.size(); i < len; i++){
+            tmp.emplace_back(nums[i], i);
+        }
+        
+        try{
+            sort(tmp.begin(), tmp.end(), [k](const auto&l, const auto&r){
+                if(l.first == r.first && abs(l.second - r.second) <= k)
+                    throw exception();
+                else
+                    return (l.first == r.first) ? (l.second < r.second) : (l.first < r.first);
+            });
+        }catch(...){return true;}
+        return false;
+    }
+};
+#+end_src

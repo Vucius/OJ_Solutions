@@ -1,0 +1,33 @@
+#+title: 1584. Average Salary Excluding the Minimum and Maximum Salary
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} salary
+# @return {Float}
+def average(salary)
+    salary.minmax.each{ |e| salary.delete(e)}
+    salary.sum.to_f / salary.count
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    double average(vector<int>& salary) {
+        int i, len;
+        double ans, mmin, mmax;
+        for (i = 0, len = salary.size(), ans = 0.0, mmin = DBL_MAX, mmax = DBL_MIN; i < len; i++) {
+            ans += salary[i];
+            if (salary[i] < mmin)
+                mmin = salary[i];
+            if (salary[i] > mmax)
+                mmax = salary[i];
+        }
+        ans -= mmin;
+        ans -= mmax;
+        len -= 2;
+        return ans/len;
+    }
+};
+#+end_src

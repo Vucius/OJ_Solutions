@@ -1,0 +1,35 @@
+#+title: 300. Longest Increasing Subsequence
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} nums
+# @return {Integer}
+def length_of_lis(nums)
+    piles = [nums.shift]
+    nums.each do |e|
+        piles[piles.bsearch_index{ _1 >= e} || piles.length] = e
+    end
+    piles.length
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> piles;
+        int i, len;
+        len = nums.size();
+        piles.reserve(len);
+        for (i = 0; i < len; i++){
+            auto left = lower_bound(piles.begin(), piles.end(), nums[i]);
+            if (left == piles.end())
+                piles.push_back(nums[i]);
+            else
+                *left = nums[i];
+        }
+        return piles.size();
+    }
+};
+#+end_src

@@ -1,0 +1,54 @@
+#+title: 2096. Find the Longest Valid Obstacle Course at Each Position
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} obstacles
+# @return {Integer[]}
+def longest_obstacle_course_at_each_position(obstacles)
+    piles = [obstacles.shift]
+    ans = [1]
+    obstacles.each do |e|
+        idx = piles.bsearch_index{ _1 > e}
+        if idx
+            piles[idx] = e
+            ans << idx + 1
+        else
+            piles << e
+            ans << piles.length
+        end
+        #piles[piles.bsearch_index{ _1 > e} || piles.length] = e
+    end
+    ans
+end
+#+end_src
+
+
+#+begin_src cpp
+#pragma GCC optimize("Ofast","inline","-ffast-math")
+#pragma GCC target("avx,mmx,sse2,sse3,sse4")
+class Solution {
+public:
+    vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
+        ios::sync_with_stdio(false);
+        cin.tie(0);
+        cout.tie(0);
+        vector<int> piles, ans;
+        int i, len;
+        len = obstacles.size();
+        piles.reserve(len);
+        ans.reserve(len);
+        for (i = 0; i < len; i++){
+            auto left = upper_bound(piles.begin(), piles.end(), obstacles[i]);
+            if (left == piles.end()){
+                piles.push_back(obstacles[i]);
+                ans.push_back(piles.size());
+            }
+            else{
+                ans.push_back(left - piles.begin() + 1);
+                *left = obstacles[i];
+            }
+        }
+        return ans;
+    }
+};
+#+end_src

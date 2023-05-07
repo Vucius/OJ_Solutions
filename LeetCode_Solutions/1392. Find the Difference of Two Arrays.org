@@ -1,0 +1,41 @@
+#+title: 1392. Find the Difference of Two Arrays
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} nums1
+# @param {Integer[]} nums2
+# @return {Integer[][]}
+def find_difference(nums1, nums2)
+[nums1.difference(nums2).uniq, nums2.difference(nums1).uniq]
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        map<int, int> tot;
+        vector<vector<int>> ans;
+        vector<int> aa, bb;
+        
+        for (auto a : nums1)
+            tot[a] = 1;
+            // 1 a, 2 b, ,3 a + b
+        for (auto b : nums2){
+            if (tot[b] == 0)
+                tot[b] = -1;
+            else if (tot[b] == 1)
+                tot[b] += 2;
+        }
+        for (auto c : tot)
+            if (c.second == 1)
+                aa.push_back(c.first);
+                else if (c.second == -1)
+                bb.push_back(c.first);
+        ans.push_back(aa);
+        ans.push_back(bb);
+        return ans;
+    }
+};
+#+end_src

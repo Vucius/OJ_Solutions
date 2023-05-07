@@ -1,0 +1,54 @@
+#+title: 1567. Maximum Number of Vowels in a Substring of Given Length
+#+author: 钟离眜
+
+#+begin_src cpp
+class Solution {
+public:
+    inline bool judgeVowel(char aim){
+        return aim == 'a' || aim == 'e' || aim == 'i' || aim == 'o' || aim == 'u';
+    }
+    int maxVowels(string s, int k) {
+        int i, len, ans, tans;
+        len = s.size();
+        for (i = tans = 0; i < k; i++)
+            if (judgeVowel(s[i]))
+                tans++;
+        for (i = k, ans = tans; i < len; i++) {
+            if (judgeVowel(s[i]))
+                tans++;
+            if (judgeVowel(s[i - k]))
+                tans--;
+            if (tans > ans)
+                ans = tans;
+        }
+        return ans;
+    }
+};
+static const auto init = []{
+        ios::sync_with_stdio(false);
+        cin.tie(NULL);
+        return false;
+}();
+#+end_src
+
+
+#+begin_src ruby
+# @param {String} s
+# @param {Integer} k
+# @return {Integer}
+def max_vowels(s, k)
+    vowels = {"a"=>true, "e"=>true, "i"=>true, "o"=>true, "u"=>true}
+    tans = 0
+    len = s.length
+    for i in 0...k
+        tans += 1 if vowels[s[i]]
+    end
+    ans = tans
+    for j in k...len
+        tans += 1 if vowels[s[j]]
+        tans -= 1 if vowels[s[j - k]]
+        ans = tans if tans > ans
+    end
+    ans
+end
+#+end_src

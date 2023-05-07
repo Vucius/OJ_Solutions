@@ -1,0 +1,53 @@
+#+title: 649. Dota2 Senate
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {String} senate
+# @return {String}
+def predict_party_victory(senate)
+    rrr = Array.new
+    ddd = Array.new
+    n = senate.length
+    i = 0
+    senate.each_char {|ch|
+    ch == 'D' ? ddd.push(i) : rrr.push(i)
+    i += 1
+    }
+    until ddd.empty? || rrr.empty?
+        ds = ddd.shift
+        rs = rrr.shift
+        ds < rs ? ddd.push(ds + n) : rrr.push(rs + n)
+    end
+    ddd.empty? ? "Radiant" : "Dire"
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        int len = senate.size();
+        queue<int> rrr, ddd;
+        int i;
+        for (i = 0, len = senate.size(); i < len; i++)
+            senate[i] == 'R' ? rrr.push(i) : ddd.push(i);
+        int rlen, dlen, ri, di;
+        for (rlen = rrr.size(), dlen = ddd.size(); rlen && dlen; ){
+            ri = rrr.front();
+            di = ddd.front();
+            rrr.pop();
+            ddd.pop();
+            if (ri < di){
+                dlen--;
+                rrr.push(ri + len);
+            }
+            else{
+                rlen--;
+                ddd.push(di + len);
+            }
+        }
+        return rlen ? "Radiant" : "Dire";
+    }
+};
+#+end_src

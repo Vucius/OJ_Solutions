@@ -1,0 +1,39 @@
+#+title: 643. Maximum Average Subarray I
+#+author: 钟离眜
+
+#+begin_src ruby
+# @param {Integer[]} nums
+# @param {Integer} k
+# @return {Float}
+def find_max_average(nums, k)
+    tans = nums[0...k].sum
+    ans = tans
+    for j in k...nums.length
+        tans = tans + nums[j] - nums[j - k]
+        ans = tans if tans > ans
+    end
+    ans * 1.0 / k
+end
+#+end_src
+
+
+#+begin_src cpp
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+    std::ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+        double tans, ans;
+        int i, len;
+        for (len = nums.size(), tans = i = 0; i < k; i++)
+            tans += nums[i];
+        for (ans = tans; i < len; i++){
+            tans += nums[i] - nums[i - k];
+            if (tans > ans)
+                ans = tans;
+        }
+        return ans / k;
+    }
+};
+#+end_src
